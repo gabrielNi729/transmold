@@ -4,6 +4,9 @@
   "description": "A tool for filters rendering / pseudo sql generation for frontend data projects",
   "main": "index.js",
   "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
+    "server": "node app.babel.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
