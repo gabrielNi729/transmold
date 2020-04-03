@@ -1,0 +1,24 @@
+{
+  "name": "transmold",
+  "version": "1.0.0",
+  "description": "A tool for filters rendering / pseudo sql generation for frontend data projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielNi729/transmold.git"
+  },
+  "keywords": [
+    "bi",
+    "data",
+    "sql-generate"
+  ],
+  "author": "gabrielni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielNi729/transmold/issues"
+  },
+  "homepage": "https://github.com/gabrielNi729/transmold#readme"
+}
