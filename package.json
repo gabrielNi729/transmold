@@ -1,8 +1,8 @@
 {
   "name": "transmold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool for filters rendering / pseudo sql generation for frontend data projects",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
     "prepublish": "npm run compile",
@@ -23,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/gabrielNi729/transmold/issues"
   },
-  "homepage": "https://github.com/gabrielNi729/transmold#readme"
+  "homepage": "https://github.com/gabrielNi729/transmold#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
 }
