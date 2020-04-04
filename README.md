@@ -1,22 +1,27 @@
 # transmold
 This project is aiming to generate pseudo sql segments, or at least to provide reference for your backend apis to generate sql instead.
 <br>
-此项目致力于sql的伪代码生成, 或者至少提供一些依据给到后端的接口来生成这些代码.
-<br>
-<br>
+
 Why this is written in JS/ES6? Because this tool's specialty to help create frontend UI components that let people of no sql background determine the query they need.
 <br>
-为什么这个工具是用js/es6书写的呢? 因为其主要的领域是在前端, 帮助渲染界面上的UI组件, 使得没有sql语言基础的应用使用者能够在界面上制定他们想要的查询.
-<br>
-<br>
+
 This tool is also more than sql. It can be used to generate segments and statements of other languages as long as you define the templates accordingly. Examples are provided in the end.
 <br>
+
+此项目致力于sql的伪代码生成, 或者至少提供一些依据给到后端的接口来生成这些代码.
+<br>
+
+为什么这个工具是用js/es6书写的呢? 因为其主要的领域是在前端, 帮助渲染界面上的UI组件, 使得没有sql语言基础的应用使用者能够在界面上制定他们想要的查询.
+<br>
+
 这个工具也不仅仅只能用于sql的生成, 如果你定义模板得到, 他也可以用于生成其他的语言片段. 例子将在结尾给到.
+
 <br>
 
 Install / 安装
 ----
 ``npm install transmold``
+<br>
 <br>
 
 Initialize / 初始化
@@ -38,12 +43,6 @@ Before we start, there are some explanations to make about the terms used below 
 <br>
 *metrics* : meaning this field's value distribution is continuous. Age and students' score in school are both metrics.
 <br>
-开始前, 简单讲一些定义:
-<br>
-*category* ： 维度
-<br>
-*metrics* : 度量
-
 <br>
 Let's say we now have some metadata - three tables and each has some fields under it, and some fields are enumerable, you can import like this:
 <br>
@@ -162,6 +161,15 @@ let allData = [
 ];
 ```
 <br>
+<br>
+<br>
+
+先简单讲一些定义:
+<br>
+*category* : 维度
+<br>
+*metrics* : 度量
+
 
 假设现在我们有一些元数据 - 三张表, 每张表都有自己的字段, 其中一些字段是可枚举的(即维度), 那么你可以使用如下方式接入:
 <br>
@@ -356,5 +364,76 @@ let opConcat = OP('拼接');
 ```
 按某个主语, 获取可以响应其数据类型的操作符, 主语可是是一个值, 一个字段, 一个枚举项, 或者一个表达式实例(稍后介绍):
 ```
+import { Operators, OP, Field } from 'transmold';
 
+let opsForNumberValue = (1).resops();
+let opsForStringValue = 'a'.resops();
+let opsForStringField = new Field({name: 'USER_ID', label: '用户ID', dataType: 'string'}).resops();
+```
+
+
+<br>
+<br>
+
+Assemble an instance / 组装表达式
+----
+To assemble an instance, you will need an operator first, and then the parameters this operator requires. The number of parameters may differ.
+A parameter accepts a normal value, a field, an enumerable item, or another instance.
+<br>
+Also, if you don't know the template of an operator, or what $1, $2, etc. stand for, please ``console.log`` the operator.
+<br>
+Below are some basic examples:
+```
+import { Instance, Field, OP } from 'transmold';
+
+let inst_1 = new Instance({template: OP('>')});           // instantiate an instance using operator '>', template is '$1>$2'
+inst_1.setValue('$1', 2);                                 // set $1 with a normal value 2
+inst_1.setValue('$2', 80);                               
+console.log(inst_1.outputText(), inst_1.isLegitimate());  // 2>80 true, legal grammatically
+
+let inst_2 = new Instance({template: OP('+')});
+inst_2.setValue('$1', 3);
+inst_2.setValue('$2', 4);
+inst_1.setValue('$2', inst_2);                            // set inst_1's $1 with inst_2
+console.log(inst_1.outputText(), inst_1.isLegitimate());  // 2>(3+4) true, legal grammatically
+
+inst_1.setValue('$2', 'w');
+console.log(inst_1.outputText(), inst_1.isLegitimate());  // 2>w false, illegal becase $2 expects a number
+
+inst_1.setValue('$2', new Field({name: 'AGE', label: 'age', dataType: 'number'}));
+console.log(inst_1.outputText(), inst_1.isLegitimate());  // 2>null.AGE true, legal because age is a number
+                                                          // 'null.' is due to the undefined table for the field
+                                                          // please don't mind for now
+```
+
+<br>
+<br>
+
+组装一个表达式, 你首先需要一个操作符, 然后是这个操作符所要求的参数. 每个操作符要求的参数个数不一定相同.
+参数位可以接受普通值, 字段, 枚举项, 或者是另一个表达式.
+<br>
+如果你不知道某个操作符对应模板, 或者不了解参数位$1, $2等该怎么填的话, 请打印出这个操作符的对象进行查看.
+<br>
+下面是一些例子:
+```
+import { Instance, OP, Field } from 'transmold';        
+
+let inst_1 = new Instance({template: OP('>')});              // 用'>'操作符实例一个表达式, 其模板为'$1>$2'
+inst_1.setValue('$1', 2);                                    // 将$1设为普通值2
+inst_1.setValue('$2', 80);
+console.log(inst_1.outputText(), inst_1.isLegitimate());     // 输出组装结果, 检查是否合理, 2>80 true, 数据类型上正确
+
+let inst_2 = new Instance({template: OP('+')});
+inst_2.setValue('$1', 3);
+inst_2.setValue('$2', 4);
+inst_1.setValue('$2', inst_2);                               // 将表达式inst_1的$1位设为表达式inst_2
+console.log(inst_1.outputText(), inst_1.isLegitimate());     // 2>(3+4) true, 数据类型上正确
+
+inst_1.setValue('$2', 'w');
+console.log(inst_1.outputText(), inst_1.isLegitimate());     // 2>w false, 不正确, $2需要给的是数字 
+
+inst_1.setValue('$2', new Field({name: 'AGE', label: '年龄', dataType: 'number'}));
+console.log(inst_1.outputText(), inst_1.isLegitimate());     // 2>null.AGE true, 正确因为年龄是个数字
+                                                             // 'null.' 是因为字段的表没有给定义, 请暂时先忽略
+                                                   
 ```

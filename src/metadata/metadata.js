@@ -35,15 +35,15 @@ function datum(tableName = '', fieldName = '', enumCode = ''){
         lastcount = count;
     }
 
-    if(!tableName){
+    if(tableName === ''){
         return null;
     }
 
-    if(!fieldName){
+    if(fieldName === ''){
         return metadataMap[`${tableName}`] || null;
     }
 
-    if(!enumCode){
+    if(enumCode === ''){
         return metadataMap[`${tableName}.${fieldName}`] || null;
     }
 
@@ -133,6 +133,8 @@ function useExample() {
             label: 'Personal information'
         }).addFields(fields)
     ];
+
+    restructure();
 }
 
 function fieldsList(){
