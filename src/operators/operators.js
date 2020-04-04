@@ -10,6 +10,16 @@ import opsTime from './mysql/mysql-time';
 import opsGeography from './mysql/mysql-geography';
 import opsAggregate from './mysql/mysql-aggregate';
 import opsConvert from './mysql/mysql-convert';
+import opsNumberCN from './mysql-cn/mysql-number';
+import opsStringCN from './mysql-cn/mysql-string';
+import opsBooleanCN from './mysql-cn/mysql-boolean';
+import opsDateCN from './mysql-cn/mysql-date';
+import opsMonthCN from './mysql-cn/mysql-month';
+import opsYearCN from './mysql-cn/mysql-year';
+import opsTimeCN from './mysql-cn/mysql-time';
+import opsGeographyCN from './mysql-cn/mysql-geography';
+import opsAggregateCN from './mysql-cn/mysql-aggregate';
+import opsConvertCN from './mysql-cn/mysql-convert';
 
 
 let operatorContexts = {};
@@ -19,6 +29,14 @@ operatorContexts[contexts.MYSQL] = [
     ...opsMonth.ops, ...opsYear.ops, ...opsTime.ops, ...opsGeography.ops,
     ...opsConvert.ops, ...opsAggregate.ops
 ];
+
+operatorContexts[contexts.MYSQL_CN] = [
+    ...opsNumberCN.ops, ...opsStringCN.ops, ...opsBooleanCN.ops, ...opsDateCN.ops,
+    ...opsMonthCN.ops, ...opsYearCN.ops, ...opsTimeCN.ops, ...opsGeographyCN.ops,
+    ...opsConvertCN.ops, ...opsAggregateCN.ops
+];
+
+
 
 let activeContext = '';
 let operators = [];

@@ -1,5 +1,6 @@
 import { InstanceExpression } from '../models/InstanceExpression';
 import { MetadataField } from '../models/MetadataField';
+import { MetadataEnum } from '../models/MetadataEnum';
 import types from '../constants/types/types';
 import { opsToRespond } from '../operators/operators'
 
@@ -7,6 +8,10 @@ import { opsToRespond } from '../operators/operators'
 const respondingOperators = 'resops';
 
 MetadataField.prototype[respondingOperators] = function() {
+    return opsToRespond(this.getDataType());
+};
+
+MetadataEnum.prototype[respondingOperators] = function(){
     return opsToRespond(this.getDataType());
 };
 

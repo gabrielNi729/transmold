@@ -205,15 +205,27 @@ export class InstanceExpression {
             switch (seg.getInputType()) {
                 case types.INPUT.CONSTANT:
                     let val = seg.getValue();
+                    if(val === null){
+                        return null;
+                    }
                     if(seg.getDataType() !== types.DATA.NUMBER && seg.getDataType() !== types.DATA.BOOLEAN){
                         val = `'${val}'`
                     }
                     return `${prefixC}${val}${suffixC}`;
                 case types.INPUT.ENUMERATE:
                     let tag = type === 'display' ? seg.getValue().getLabel() : seg.getValue().getCode();
+                    if(tag === null){
+                        return null;
+                    }
+                    if(seg.getDataType() !== types.DATA.NUMBER && seg.getDataType() !== types.DATA.BOOLEAN){
+                        tag = `'${tag}'`
+                    }
                     return `${prefixE}${tag}${suffixE}`;
                 case types.INPUT.VARIABLE:
-                    let res = type === 'display' ? seg.getValue().getLabel() : seg.getValue().getName();
+                    let res = type === 'display' ? seg.getValue().getLabel() : `${seg.getValue().getTableName()}.${seg.getValue().getName()}`;
+                    if(res === null){
+                        return null;
+                    }
                     return `${prefixV}${res}${suffixV}`;
                 case types.INPUT.INSTANCE:
                     let subSegs = type === 'display' ? seg.getValue().getSegmentsDisplay() : seg.getValue().getSegmentsCode();

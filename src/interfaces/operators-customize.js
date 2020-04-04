@@ -7,7 +7,7 @@ let currentId = starterId;
 
 export class CustomizedTemplate extends DefOperatorTemplate{
 
-    constructor(name, context, templateDisplay, templateCode, resultDataType, params){
+    constructor({name, context, templateDisplay, templateCode, resultDataType, params}){
         super({
             id: currentId,
             name,
@@ -32,7 +32,7 @@ export class CustomizedTemplate extends DefOperatorTemplate{
 
 export class CustomizedParameter extends DefOperatorParameter{
 
-    constructor(dataType, inputTypes, regulations){
+    constructor({dataType, inputTypes, regulations}){
         super({
             dataType,
             inputTypes,

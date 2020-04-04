@@ -3,7 +3,7 @@ import { MetadataField } from './MetadataField';
 
 export class MetadataTable {
 
-    constructor({id, name, label, hint}){
+    constructor({id, name, label, hint = ''}){
 
         if(MetadataTable.validate(...arguments)){
             this.id = id;
@@ -11,6 +11,7 @@ export class MetadataTable {
             this.label = label;
             this.hint = hint;
             this.fields = [];
+            this.mapFieldsName = {};
         }
     }
 
@@ -19,14 +20,33 @@ export class MetadataTable {
         fields.forEach(f => {
             if (!(f instanceof MetadataField)) {
                 console.error(`${prefix}: given object not an instance of Field`);
-            } else {
-                this.fields.push(f.setTableId(this.id));
+            }else if(this.mapFieldsName[f.getName()] === 1){
+                console.error(`${prefix}: field ${f.getName()} already exists for table ${this.name}`);
+            }else {
+                this.mapFieldsName[f.getName()] = 1;
+                this.fields.push(f.setTableId(this.id).setTableName(this.name));
             }
         });
         return this;
     }
 
-    static validate({id, name, label, hint}){
+    getName(){
+        return this.name;
+    }
+
+    getLabel(){
+        return this.label;
+    }
+
+    getHint(){
+        return this.hint;
+    }
+
+    getFields(){
+        return this.fields;
+    }
+
+    static validate({id, name, label, hint = ''}){
 
         let prefix = `defining table [${name}]`;
 

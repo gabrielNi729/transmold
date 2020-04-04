@@ -4,7 +4,7 @@ import { MetadataEnum } from './MetadataEnum';
 
 export class MetadataField{
 
-    constructor({id, name, label, hint, dataType, distributeType = types.DISTRIBUTE.NONE, unit}) {
+    constructor({id, name, label, hint = '', dataType, distributeType = types.DISTRIBUTE.NONE, unit}) {
 
         if(MetadataField.validate(...arguments)){
             this.id = id;
@@ -12,10 +12,12 @@ export class MetadataField{
             this.label = label;
             this.hint = hint;
             this.tableId = null;
+            this.tableName = null;
             this.dataType = dataType;
             this.distributeType = distributeType;
             this.unit = unit;
             this.enums = [];
+            this.mapEnumsCode = {}
         }
 
     }
@@ -27,7 +29,10 @@ export class MetadataField{
             enums.forEach(en => {
                 if(!(en instanceof MetadataEnum)){
                     console.error(`${prefix}: given object not an instance of Enum`);
-                } else{
+                } else if(this.mapEnumsCode[en.getCode()] === 1){
+                    console.error(`${prefix}: enum ${en.getCode()} already exists for field ${this.name}`);
+                }else{
+                    this.mapEnumsCode[en.getCode()] = 1;
                     this.enums.push(en.setFieldId(this.id).setDataType(this.dataType));
                 }
             })
@@ -38,7 +43,12 @@ export class MetadataField{
     }
 
     setTableId(tableId){
-        this.tableId= tableId;
+        this.tableId = tableId;
+        return this;
+    }
+
+    setTableName(tableName){
+        this.tableName = tableName;
         return this;
     }
 
@@ -54,11 +64,19 @@ export class MetadataField{
         return this.hint;
     }
 
+    getTableId(){
+        return this.tableId;
+    }
+
+    getTableName(){
+        return this.tableName;
+    }
+
     getDataType(){
         return this.dataType;
     }
 
-    getDistribute(){
+    getDistributeType(){
         return this.distributeType;
     }
 
@@ -70,7 +88,7 @@ export class MetadataField{
         return this.enums;
     }
 
-    static validate({id, name, label, hint, dataType, distributeType = types.DISTRIBUTE.NONE, unit}){
+    static validate({id, name, label, hint = '', dataType, distributeType = types.DISTRIBUTE.NONE, unit}){
 
         let prefix = `defining field [${name}]`;
 

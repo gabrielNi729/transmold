@@ -31,6 +31,10 @@ export class MetadataEnum {
         return this.label;
     }
 
+    getFieldId(){
+        return this.fieldId;
+    }
+
     getDataType(){
         return this.dataType
     }

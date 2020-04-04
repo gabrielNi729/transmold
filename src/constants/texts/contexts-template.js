@@ -1,4 +1,5 @@
 export default {
 
-    MYSQL: 'mysql'
+    MYSQL: 'mysql',
+    MYSQL_CN: 'mysql-cn'
 }
