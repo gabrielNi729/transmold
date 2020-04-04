@@ -2,7 +2,7 @@ import { op } from './operators/operators';
 import operators from './operators/operators'
 import types from './constants/types/types';
 import './methods/respond';
-import './src/methods/abbreviate';
+import './methods/abbreviate';
 import metadata from './metadata/metadata'
 import { InstanceExpression } from './models/InstanceExpression';
 import { CustomizedTemplate, CustomizedParameter } from './customize/operators-customize';
