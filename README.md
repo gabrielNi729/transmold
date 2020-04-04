@@ -331,7 +331,7 @@ import { OP } from 'transmold';
 let opPlus = OP('+');
 let opConcat = OP('concat');
 ```
-Get operators responsive to a subject that can be a normal value, a field, a enum or a instance:
+Get operators responsive to a subject that can be a normal value, a field, a enum or a instance (will explain later):
 ```
 let opsForNumberValue = (1).resops();
 let opsForStringValue = 'a'.resops();
@@ -353,4 +353,8 @@ import { Operators, OP } from 'transmold';
 Operators.activateContext('mysql-cn');       // 切换mysql中文模板环境
 let opPlus = OP('+');
 let opConcat = OP('拼接');
+```
+按某个主语, 获取可以响应其数据类型的操作符, 主语可是是一个值, 一个字段, 一个枚举项, 或者一个表达式实例(稍后介绍):
+```
+
 ```
