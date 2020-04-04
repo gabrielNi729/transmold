@@ -281,3 +281,76 @@ let allData = [
 <br>
 <br>
 
+Access metadata / 访问元数据 
+----
+You can use the ``allData`` defined in the last step to access table, and use api like ``table.getFields() / allData[0].getFields()`` to access fields, and likewise, use api like ``field.getEnums() / allData[2].getFields()[3].getEnums()`` to access enumerate items under fields.
+<br>
+Also you can use api ``DATUM`` to locate directly:
+<br>
+```
+import { Table, Field, Enum, DATUM } from 'transmold';
+
+console.log(DATUM('USER_INFO'));               // DATUM(tableName) to access table
+console.log(DATUM('USER_INFO', 'USER_ID'));    // DATUM(tableName, fieldName) to access field
+console.log(DATUM('USER_INFO', 'GENDER', 0));  // DATUM(tableName, fieldName, enumCode) to access enum
+
+```
+<br>
+<br>
+
+你可以使用上一步定义的``alldata``来访问表, 并使用api如``table.getFields() / allData[0].getFields()``访问字段, 以及``field.getEnums() / allData[2].getFields()[3].getEnums()``来访问枚举项.
+<br>
+或者你可以使用api ``DATUM``来直接访问:
+<br>
+```
+import { Table, Field, Enum, DATUM } from 'transmold';
+
+console.log(DATUM('USER_INFO_DIM'));               // DATUM(tableName) 访问表
+console.log(DATUM('USER_INFO_DIM', 'USER_ID'));    // DATUM(tableName, fieldName) 访问字段
+console.log(DATUM('USER_INFO_DIM', 'GENDER', 1));  // DATUM(tableName, fieldName, enumCode) 访问枚举项
+
+```
+
+<br>
+<br>
+
+Access operator / 访问操作符
+----
+List operators:
+```
+import { Operators } from 'transmold';
+
+let list = Operators.opsList();                      // access all
+let listByResult = Operators.opsByResult('number');  // access by result data type
+```
+
+Directly access a single operator by it's alias:
+```
+import { OP } from 'transmold';
+
+let opPlus = OP('+');
+let opConcat = OP('concat');
+```
+Get operators responsive to a subject that can be a normal value, a field, a enum or a instance:
+```
+let opsForNumberValue = (1).resops();
+let opsForStringValue = 'a'.resops();
+let opsForStringField = new Field({name: 'USER_ID', label: 'user id', dataType: 'string'}).resops();
+```
+<br>
+
+列出操作符
+```
+import { Operators } from 'transmold';
+
+let list = Operators.opsList();                      // 获取所有
+let listByResult = Operators.opsByResult('number');  // 按结果类型获取
+```
+按假名alias直接获取单个操作符
+```
+import { Operators, OP } from 'transmold';
+
+Operators.activateContext('mysql-cn');       // 切换mysql中文模板环境
+let opPlus = OP('+');
+let opConcat = OP('拼接');
+```
