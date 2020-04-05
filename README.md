@@ -18,6 +18,25 @@ This tool is also more than sql. It can be used to generate segments and stateme
 
 <br>
 
+
+UI demo / UI组件演示 
+----
+The link below is a very basic UI component rendered based on ``transmold``.
+<br>
+However the component is not provided in ``transmold`` itself.
+<br>
+https://gabrielni729.github.io/transmold-demo/#/demo-en
+
+<br>
+
+下方的链接是一个UI组件的简单例子, 组件的渲染基于``transmold`` . 
+<br>
+请注意本工具本身并不提供UI组件.
+<br>
+https://gabrielni729.github.io/transmold-demo/#/demo-cn
+
+<br>
+
 Install / 安装
 ----
 ``npm install transmold``
