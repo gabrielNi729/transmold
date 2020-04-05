@@ -478,7 +478,58 @@ new Template({
         $1: new Parameter({
             dataType: 'number'
         })
-    }}).as('cubic');              // alias
+    }}).as('cubic');                // alias
     
-console.log(OP('cubic'));         // access by alias
+console.log(OP('cubic'));           // access by alias
+
+new Template({
+    name: 'equals',
+    context: 'java',                // define under context java
+    templateDisplay: '$1=$2',
+    templateCode: '$1 != null && $1.equals($2)',
+    resultDataType: 'boolean',
+    params: {
+        $1: new Parameter({dataType: 'string'}),
+        $2: new Parameter({dataType: 'string'})
+    }}).as('=');
+
+Operators.activateContext('java');   // switch context
+console.log(OP('='));
+```
+
+<br>
+
+和内置提供的mysql以及mysql-cn操作符一样, 你也可以自定义操作符, 这些操作符可以是oracle或其他sql, 甚至是其他编程语言.
+<br>
+请注意此处又一个概念叫做*context*, 默认是mysql. 如果你想创建其他语言的操作符模板, 需要将他们声明为一个新的context并切换至它.
+```
+import { Template, Parameter, OP, Operators } from 'transmold';
+
+new Template({
+    name: '立方',
+    context: 'mysql',
+    templateDisplay: '立方($1)',
+    templateCode: '$1*$1*$1',
+    resultDataType: 'number',
+    params: {
+        $1: new Parameter({
+            dataType: 'number'
+        })
+    }}).as('立方');                          // 定义假名
+
+console.log(OP('立方'));                     // 使用假名访问
+
+new Template({
+    name: 'equals',
+    context: 'java',                         // 定义在java下
+    templateDisplay: '$1=$2',
+    templateCode: '$1 != null && $1.equals($2)',
+    resultDataType: 'boolean',
+    params: {
+        $1: new Parameter({dataType: 'string'}),
+        $2: new Parameter({dataType: 'string'})
+    }}).as('=');
+
+Operators.activateContext('java');           // 切换至java
+console.log(OP('='));
 ```
