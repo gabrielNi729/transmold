@@ -456,3 +456,29 @@ console.log(inst_1.outputText(), inst_1.isLegitimate());     // 2>null.AGE true,
                                                              // 'null.' 是因为字段的表没有给定义, 请暂时先忽略
                                                    
 ```
+
+<br>
+<br>
+
+Customize operators / 自定义操作符
+----
+Like the built-in mysql and mysql-cn operators, you can also customize your own operators, which can either be oracle or other sqls, or even other programming languages.
+<br>
+Please know first that there is a concept called operators' *context* that is mysql by default. If you'd like to create operators of another language, simply define them first under a new context and then switch to it.
+```
+import { Template, Parameter, OP, Operators } from 'transmold';
+
+new Template({
+    name: 'cubic',
+    context: 'mysql',
+    templateDisplay: 'cubic($1)',
+    templateCode: '$1*$1*$1',
+    resultDataType: 'number',
+    params: {
+        $1: new Parameter({
+            dataType: 'number'
+        })
+    }}).as('cubic');              // alias
+    
+console.log(OP('cubic'));         // access by alias
+```
