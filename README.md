@@ -25,7 +25,7 @@ The link below is a very basic UI component rendered based on ``transmold``.
 <br>
 However the component is not provided in ``transmold`` itself.
 <br>
-https://gabrielni729.github.io/transmold-demo/#/demo-en
+>https://gabrielni729.github.io/transmold-demo/#/demo-en
 
 <br>
 
@@ -33,7 +33,7 @@ https://gabrielni729.github.io/transmold-demo/#/demo-en
 <br>
 请注意本工具本身并不提供UI组件.
 <br>
-https://gabrielni729.github.io/transmold-demo/#/demo-cn
+>https://gabrielni729.github.io/transmold-demo/#/demo-cn
 
 <br>
 
