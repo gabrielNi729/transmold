@@ -1,6 +1,6 @@
 {
   "name": "transmold",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A tool for filters rendering / pseudo sql generation for frontend data projects",
   "main": "lib/index.js",
   "scripts": {
@@ -29,7 +29,8 @@
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.0"
+    "@babel/preset-env": "^7.9.0",
+    "@babel/runtime": "^7.9.2"
   },
   "files": [
     "package.json",
