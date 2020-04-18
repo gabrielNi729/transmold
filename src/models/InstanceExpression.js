@@ -138,6 +138,11 @@ export class InstanceExpression {
         return this;
     }
 
+    setName(name){
+        this.name = name;
+        return this;
+    }
+
     convertConstantToEnumerate(holder, value){
         if(typeof value === 'object'){
             return value;
